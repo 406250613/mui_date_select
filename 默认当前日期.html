@@ -39,41 +39,26 @@
 		</header>
 		<div class="mui-content">
 			<div class="mui-content-padded">
-				<button id='demo4' data-options='{"type":"date"}' class="btn mui-btn mui-btn-block">选择日期 ...</button>
-				<div id='result' class="ui-alert"></div>
+				<button id='date' class="btn mui-btn mui-btn-block">选择日期 ...</button>
+				<div id='result'   class="ui-alert"></div>
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.picker.min.js"></script>
 		<script>
 			mui.init();
-			var result = mui('#result')[0];
-			var btn = mui('.btn')[0];
+			var btn = document.querySelector('#date');
+			var result = document.querySelector('#result');
+			var dtPicker = new mui.DtPicker({
+				type:'date'
+			}); 
 			// 监听日期选择点击事件
 			btn.addEventListener('tap', function() {
-				var _self = this;
-				if (_self.picker) {
-					_self.picker.show(function(rs) {
-						result.innerText = '选择结果: ' + rs.text;
-
-						//释放组件资源，释放后将将不能再操作组件
-						_self.picker.dispose();
-						_self.picker = null;
-					});
-				} else {
-					var optionsJson = this.getAttribute('data-options') || '{}';
-					var options = JSON.parse(optionsJson);
-					var id = this.getAttribute('id');
-					_self.picker = new mui.DtPicker(options);
-					_self.picker.show(function(rs) {
-						result.innerText = '选择结果: ' + rs.text;
-
-						//释放组件资源，释放后将将不能再操作组件
-						_self.picker.dispose();
-						_self.picker = null;
-					});
-				}
+				dtPicker.show(function (selectItems) { 
+					result.innerHTML=selectItems.value;
+				})
 			}, false);
 		</script>
 	</body>
 </html>
+ 
